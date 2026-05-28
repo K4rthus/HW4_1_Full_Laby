@@ -29,7 +29,9 @@ void AMazePlayerController::SetInitialGoal()
         UGameplayStatics::GetActorOfClass(World, AGrowingTreeMazeGenerator::StaticClass()));
     AMazeAgent* Agent = Cast<AMazeAgent>(
         UGameplayStatics::GetActorOfClass(World, AMazeAgent::StaticClass()));
-
+    
+    MazeGen->OnMazeRegenerated.AddUObject(Agent, &AMazeAgent::OnMazeRegenerated);
+    
     FIntPoint GoalCell = MazeGen->GetGoalCell();
     Agent->UpdateGoal(GoalCell, MazeGen);
 }

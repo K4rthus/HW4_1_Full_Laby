@@ -40,6 +40,8 @@ public:
 	bool IsMoving() const { return bMoving; }
 	
 	void VisualizeSearchSteps(const TArray<FVisualStep>& Steps);
+	
+	void OnMazeRegenerated(AGrowingTreeMazeGenerator* MazeGen);
 
 protected:
 	virtual void Tick(float DeltaTime) override;
@@ -57,4 +59,7 @@ private:
 	int32 CurrentStepIndex = 0;
 	void ProcessNextStep();
 	void FinishVisualization(const TArray<FIntPoint>& Path, float CellSize);
+	
+	FIntPoint CurrentGoal;
+	bool bHasGoal = false;
 };

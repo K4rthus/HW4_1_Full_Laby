@@ -77,6 +77,9 @@ void AMazeAgent::UpdateGoal(const FIntPoint& NewGoal, AGrowingTreeMazeGenerator*
     if (!MazeGen) return;
     UMazePathfinder* PF = MazeGen->GetPathfinder();
     if (!PF) return;
+    
+    CurrentGoal = NewGoal;
+    bHasGoal = true;
 
     const float CellSize = MazeGen->GetCellSize();
     FIntPoint StartCell = GetCurrentCell(CellSize);
@@ -103,6 +106,19 @@ void AMazeAgent::UpdateGoal(const FIntPoint& NewGoal, AGrowingTreeMazeGenerator*
         PendingPath = NewPath;
         PendingCellSize = CellSize;
         VisualizeSearchSteps(Steps);
+    }
+}
+
+void AMazeAgent::OnMazeRegenerated(AGrowingTreeMazeGenerator* MazeGen)
+{
+    if (!MazeGen) return;
+    if (bHasGoal)
+    {
+        UpdateGoal(CurrentGoal, MazeGen);
+    }
+    else
+    {
+        UpdateGoal(MazeGen->GetGoalCell(), MazeGen);
     }
 }
 

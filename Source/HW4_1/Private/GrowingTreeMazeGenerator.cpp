@@ -58,7 +58,17 @@ void AGrowingTreeMazeGenerator::GenerateMaze()
             }
         }
     }
+    
+    OnMazeRegenerated.Broadcast(this);
 }
+
+#if WITH_EDITOR
+void AGrowingTreeMazeGenerator::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+{
+    Super::PostEditChangeProperty(PropertyChangedEvent);
+    GenerateMaze();
+}
+#endif
 
 void AGrowingTreeMazeGenerator::ClearMaze()
 {
